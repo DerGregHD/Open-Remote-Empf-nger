@@ -1,1 +1,1 @@
-# Open-Remote-Empfänger
+# OpenRemote-Empfänger
