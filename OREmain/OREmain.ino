@@ -1,7 +1,15 @@
+//#########################################
+//########## OpenRemoteEmpfanger ##########
+//#########################################
+
+//########## librarys ##########
 #include <SPI.h>
 #include "printf.h"
 #include "RF24.h"
 #include <Servo.h>
+
+//########## objects, arrays, variabeles ##########
+bool blink = LOW;
 
 //RF24
 RF24 radio(7, 8);
@@ -32,10 +40,13 @@ ServoData servoData;
 Servo servo0;
 Servo servo1;
 
+//########## methods ##########
+
+//########## setup code ##########
 void setup() {
+  pinMode(25, OUTPUT);
   Serial.begin(115200);
-  while (!Serial) {
-  }
+  delay(1000);
   if (!radio.begin()) {
     Serial.println(F("radio hardware is not responding!!"));
     while (1) {
@@ -50,8 +61,10 @@ void setup() {
   servo1.attach(22);
 }
 
+//########## loop code ##########
 void loop() {
-  Serial.println(F("Start the loop!"));
+  digitalWrite(25, blink);
+  blink = !blink;
   
   uint8_t pipe;
   if (radio.available(&pipe)) {              // is there a payload? get the pipe number that recieved it
@@ -63,8 +76,10 @@ void loop() {
     Serial.println(servoData.sD1);             // fetch payload from FIFO
     servo0.write(servoData.sD0);
     servo1.write(servoData.sD1);
-    delay(10);
+    delay(20);
   }else{
     Serial.println(F("radio is not available"));
+    servo0.write(90);
+    servo1.write(90);
   }
 }
