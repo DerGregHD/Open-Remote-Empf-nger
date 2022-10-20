@@ -83,7 +83,7 @@ void loop() {
   blink = !blink;
   
   uint8_t pipe;
-  //if (radio.available(&pipe)) {              // is there a payload? get the pipe number that recieved it
+  if (radio.available(&pipe)) {              // is there a payload? get the pipe number that recieved it
     uint8_t bytes = radio.getPayloadSize();  // get the size of the payload
     radio.read(&servoData, bytes);
     Serial.print("sD0: ");
@@ -100,18 +100,18 @@ void loop() {
     servo7.write(servoData.sD7);
     servo8.write(servoData.sD8);
     servo9.write(servoData.sD9);
-    delay(50);
-  //}else{
-    //Serial.println(F("radio is not available"));
-    //servo0.write(90);
-    //servo1.write(90);
-    //servo2.write(90);
-    //servo3.write(90);
-    //servo4.write(90);
-    //servo5.write(90);
-    //servo6.write(90);
-    //servo7.write(90);
-    //servo8.write(90);
-    //servo9.write(90);
-  //}
+    delay(10);
+  }else{
+    Serial.println(F("radio is not available"));
+    servo0.write(90);
+    servo1.write(90);
+    servo2.write(90);
+    servo3.write(90);
+    servo4.write(90);
+    servo5.write(90);
+    servo6.write(90);
+    servo7.write(90);
+    servo8.write(90);
+    servo9.write(90);
+  - }
 }
