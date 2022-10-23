@@ -98,10 +98,39 @@ void loop() {
   if (radio.available(&pipe)) {              // is there a payload? get the pipe number that recieved it
     uint8_t bytes = radio.getPayloadSize();  // get the size of the payload
     radio.read(&servoData, bytes);
+    Serial.println("##########");
     Serial.print("sD0: ");
     Serial.print(servoData.sD0);
     Serial.print(" sD1: ");
-    Serial.println(servoData.sD1);             // fetch payload from FIFO
+    Serial.print(servoData.sD1);
+    Serial.print(" sD2: ");
+    Serial.print(servoData.sD2);
+    Serial.print(" sD3: ");
+    Serial.print(servoData.sD3);
+    Serial.print(" sD4: ");
+    Serial.print(servoData.sD4);
+    Serial.print(" sD5: ");
+    Serial.print(servoData.sD5);
+    Serial.print(" sD6: ");
+    Serial.print(servoData.sD6);
+    Serial.print(" sD7: ");
+    Serial.print(servoData.sD7);
+    Serial.print(" sD8: ");
+    Serial.print(servoData.sD8);
+    Serial.print(" sD9: ");
+    Serial.println(servoData.sD9);
+    Serial.print(" sD10: ");
+    Serial.print(servoData.sD10);
+    Serial.print(" sD11: ");
+    Serial.print(servoData.sD11);
+    Serial.print(" sD12: ");
+    Serial.print(servoData.sD12);
+    Serial.print(" sD13: ");
+    Serial.print(servoData.sD13);
+    Serial.print(" sD14: ");
+    Serial.print(servoData.sD14);
+    Serial.print(" sD15: ");
+    Serial.println(servoData.sD15);             // fetch payload from FIFO
     servo0.write(servoData.sD0);
     servo1.write(servoData.sD1);
     servo2.write(servoData.sD2);
