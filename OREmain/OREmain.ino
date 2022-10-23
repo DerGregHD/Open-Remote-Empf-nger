@@ -47,6 +47,12 @@ Servo servo6;
 Servo servo7;
 Servo servo8;
 Servo servo9;
+Servo servo10;
+Servo servo11;
+Servo servo12;
+Servo servo13;
+Servo servo14;
+Servo servo15;
 
 //########## methods ##########
 
@@ -75,6 +81,12 @@ void setup() {
   servo7.attach(7);
   servo8.attach(8);
   servo9.attach(9);
+  servo10.attach(10);
+  servo11.attach(11);
+  servo12.attach(12);
+  servo13.attach(13);
+  servo14.attach(14);
+  servo15.attach(15);
 }
 
 //########## loop code ##########
@@ -100,6 +112,12 @@ void loop() {
     servo7.write(servoData.sD7);
     servo8.write(servoData.sD8);
     servo9.write(servoData.sD9);
+    servo10.write(servoData.sD10);
+    servo11.write(servoData.sD11);
+    servo12.write(servoData.sD12);
+    servo13.write(servoData.sD13);
+    servo14.write(servoData.sD14);
+    servo15.write(servoData.sD15);
     delay(10);
   }else{
     Serial.println(F("radio is not available"));
@@ -113,5 +131,11 @@ void loop() {
     servo7.write(90);
     servo8.write(90);
     servo9.write(90);
-  - }
+    servo10.write(90);
+    servo11.write(90);
+    servo12.write(90);
+    servo13.write(90);
+    servo14.write(90);
+    servo15.write(90);
+  }
 }
