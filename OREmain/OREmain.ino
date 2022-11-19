@@ -10,6 +10,7 @@
 
 //########## objects, arrays, variabeles ##########
 bool blink = LOW;
+int timeout = 0;
 
 //RF24
 RF24 radio(20, 17);
@@ -95,7 +96,9 @@ void loop() {
   blink = !blink;
   
   uint8_t pipe;
-  if (radio.available(&pipe)) {              // is there a payload? get the pipe number that recieved it
+  if (radio.available(&pipe)) {
+    timeout = 0;
+    // is there a payload? get the pipe number that recieved it
     uint8_t bytes = radio.getPayloadSize();  // get the size of the payload
     radio.read(&servoData, bytes);
     Serial.println("##########");
@@ -149,22 +152,43 @@ void loop() {
     servo15.write(servoData.sD15);
     delay(10);
   }else{
-    Serial.println(F("radio is not available"));
-    servo0.write(90);
-    servo1.write(90);
-    servo2.write(90);
-    servo3.write(90);
-    servo4.write(90);
-    servo5.write(90);
-    servo6.write(90);
-    servo7.write(90);
-    servo8.write(90);
-    servo9.write(90);
-    servo10.write(90);
-    servo11.write(90);
-    servo12.write(90);
-    servo13.write(90);
-    servo14.write(90);
-    servo15.write(90);
+    timeout++;
+    if(timeout < 15) {
+      Serial.println(F("radio is not available"));
+      servo0.write(servoData.sD0);
+      servo1.write(servoData.sD1);
+      servo2.write(servoData.sD2);
+      servo3.write(servoData.sD3);
+      servo4.write(servoData.sD4);
+      servo5.write(servoData.sD5);
+      servo6.write(servoData.sD6);
+      servo7.write(servoData.sD7);
+      servo8.write(servoData.sD8);
+      servo9.write(servoData.sD9);
+      servo10.write(servoData.sD10);
+      servo11.write(servoData.sD11);
+      servo12.write(servoData.sD12);
+      servo13.write(servoData.sD13);
+      servo14.write(servoData.sD14);
+      servo15.write(servoData.sD15);
+    }else {
+      Serial.println(F("radio is not available"));
+      servo0.write(90);
+      servo1.write(90);
+      servo2.write(90);
+      servo3.write(90);
+      servo4.write(90);
+      servo5.write(90);
+      servo6.write(90);
+      servo7.write(90);
+      servo8.write(90);
+      servo9.write(90);
+      servo10.write(90);
+      servo11.write(90);
+      servo12.write(90);
+      servo13.write(90);
+      servo14.write(90);
+      servo15.write(90);
+    }
   }
 }
