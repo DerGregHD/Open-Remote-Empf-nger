@@ -3,9 +3,16 @@
 #include "RF24.h"
 #include <Servo.h>
 
+//RFM95W
+#define rfm95w_mosi 19
+#define rfm95w_miso 16
+#define rfm95w_sck 18
+#define rfm95w_cs 17
+#define rfm95w_reset 20
+
 //RF24
-RF24 radio(7, 8);
-uint8_t address[][6] = {"00001"};
+//RF24 radio(7, 8);
+//uint8_t address[][6] = {"00001"};
 
 int PWMValue = 90;
 
@@ -15,15 +22,15 @@ void setup() {
   Serial.begin(115200);
   while (!Serial) {
   }
-  if (!radio.begin()) {
-    Serial.println(F("radio hardware is not responding!!"));
-    while (1) {
-      }
+  Serial.println("LoRa Receiver");
+  LoRa.setPins(rfm95w_cs, rfm95w_reset, 2);
+  if (!LoRa.begin(868E6)) {
+    Serial.println("Starting LoRa failed!");
+    while (1);
   }
-  radio.setPALevel(RF24_PA_LOW);
-  radio.setPayloadSize(sizeof(PWMValue));
-  radio.openReadingPipe(1, address[0]);
-  radio.startListening();
+  else {
+    Serial.println("Starting LoRa successfull!");
+  }
 
   servo1.attach(21);
 }
@@ -32,13 +39,24 @@ void loop() {
   Serial.println(F("Start the loop!"));
   
   uint8_t pipe;
-  if (radio.available(&pipe)) {              // is there a payload? get the pipe number that recieved it
-    uint8_t bytes = radio.getPayloadSize();  // get the size of the payload
-    radio.read(&PWMValue, bytes);             // fetch payload from FIFO
+  // try to parse packet
+  int packetSize = LoRa.parsePacket();
+  if (packetSize) {
+    // received a packet
+    Serial.print("Received packet '");
+
+    // read packet
+    while (LoRa.available()) {
+      Serial.print((char)LoRa.read());
+    }
+
+    // print RSSI of packet
+    Serial.print("' with RSSI ");
+    Serial.println(LoRa.packetRssi());
+  }
     servo1.write(PWMValue);
     Serial.println(PWMValue);
     delay(10);
-  }else{
     Serial.println(F("radio is not available"));
-  }
+  
 }
