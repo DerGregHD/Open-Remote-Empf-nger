@@ -10,10 +10,6 @@
 #define rfm95w_cs 17
 #define rfm95w_reset 20
 
-//RF24
-//RF24 radio(7, 8);
-//uint8_t address[][6] = {"00001"};
-
 int PWMValue = 90;
 
 Servo servo1;
